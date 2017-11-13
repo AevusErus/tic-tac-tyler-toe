@@ -4,8 +4,8 @@
 <div class="playfield">
   <mat-grid-list cols="3" rowHeight="200px">
     <!--Row 1-->
-    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color" (click)="placeSymbol(tile)">
-      {{tile.text}}
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color" [ngStyle]="{'background-image': 'url(' + tile.imagePath+ ')'}" (click)="placeSymbol(tile)">
+      <!-- <img [src]="xImage"/> -->
     </mat-grid-tile>
   </mat-grid-list>
 </div>
