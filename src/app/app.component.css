@@ -1,0 +1,7 @@
+.playfield {
+    position: absolute;
+    left: 30%;
+    top: 25%;
+    width: 600px;
+    height: 600px;
+}
