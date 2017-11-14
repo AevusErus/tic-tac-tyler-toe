@@ -12,7 +12,6 @@ export class AppComponent {
   // declare board array to keep track of moves, initialize it with 'B' blank entries
   board: String[][] = [["B","B","B"],["B","B","B"],["B","B","B"]];
 
-
   tiles = [
     { text: 'One', cols: 1, rows: 1, color: 'lightblue', imagePath: '', row: 1 , column: 1 },
     { text: 'Two', cols: 1, rows: 1, color: 'lightblue', imagePath: '', row: 1, column: 2  },
@@ -49,10 +48,44 @@ export class AppComponent {
         console.log("Must pick a blank space! It is still O's turn.");
       } 
     }
-    //display the board array
-    console.log(this.board[0][0], this.board[1][0], this.board[2][0]);
-    console.log(this.board[0][1], this.board[1][1], this.board[2][1]);
-    console.log(this.board[0][2], this.board[1][2], this.board[2][2]);
-    console.log("Number of moves:"+this.movecount);
+
+    // manually check win condition, refactor this later!
+    // first row
+    if (this.board[0][0] == this.board[1][0] && this.board[0][0] == this.board[2][0] && this.board[0][0] != "B") {
+      console.log("Player: " + this.board[0][0] + " has won!");
+    }
+    // second row
+    if (this.board[0][1] == this.board[1][1] && this.board[0][1] == this.board[2][1] && this.board[0][1] != "B") {
+      console.log("Player: " + this.board[0][1] + " has won!");
+    }
+    // third row
+    if (this.board[0][2] == this.board[1][2] && this.board[0][2] == this.board[2][2] && this.board[0][2] != "B") {
+      console.log("Player: " + this.board[0][2] + " has won!");
+    }
+    // first column
+    if (this.board[0][0] == this.board[0][1] && this.board[0][0] == this.board[0][2] && this.board[0][0] != "B") {
+      console.log("Player: " + this.board[0][0] + " has won!");
+    }
+    // second column
+    if (this.board[1][0] == this.board[1][1] && this.board[1][0] == this.board[1][2] && this.board[1][0] != "B") {
+      console.log("Player: " + this.board[1][0] + " has won!");
+    }
+    // third column
+    if (this.board[2][0] == this.board[2][1] && this.board[2][0] == this.board[2][2] && this.board[2][0] != "B") {
+      console.log("Player: " + this.board[2][0] + " has won!");
+    }
+    // diag bottom-right
+    if (this.board[0][0] == this.board[1][1] && this.board[0][0] == this.board[2][2] && this.board[0][0] != "B") {
+      console.log("Player: " + this.board[0][0] + " has won!");
+    }
+    // diag top-right
+    if (this.board[0][2] == this.board[1][1] && this.board[0][2] == this.board[2][0] && this.board[0][2] != "B") {
+      console.log("Player: " + this.board[0][2] + " has won!");
+    }
+    // check draw condition
+    if (this.movecount == 8) {
+      console.log("This game has resulted in a draw");
+    }
+
 }
 }
