@@ -36,7 +36,7 @@ export class AppComponent {
       } else {
         console.log("Must pick a blank space! It is still X's turn.");
       }
-    // player Y's turn  
+    // player Y's turn
     } else {
       //check if the tile is blank
       if (this.board[tile.column-1][tile.row-1] == "B") {
@@ -46,7 +46,7 @@ export class AppComponent {
         this.playerBool = !this.playerBool;
       } else {
         console.log("Must pick a blank space! It is still O's turn.");
-      } 
+      }
     }
 
     // manually check win condition, refactor this later!
