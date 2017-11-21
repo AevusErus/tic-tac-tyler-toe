@@ -4,13 +4,13 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
+import ApplicationComponent from './Components/Application/application';
+import BoardComponent from './Components/Board/board';
+import HeaderComponenet from './Components/Header/header';
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [ApplicationComponent, BoardComponent, HeaderComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -24,6 +24,6 @@ import { AppComponent } from './app.component';
     MatGridListModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ApplicationComponent]
 })
 export class AppModule { }
