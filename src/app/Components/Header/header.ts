@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.html'
+  templateUrl: './header.html',
+  styleUrls: ['./header.css']
 })
 
-export default class HeaderComponenet {}
+export default class HeaderComponent {}

@@ -6,7 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import ApplicationComponent from './Components/Application/application';
 import BoardComponent from './Components/Board/board';
-import HeaderComponenet from './Components/Header/header';
+import HeaderComponent from './Components/Header/header';
+import { TileService } from './services/tile-service';
+// import { BoardService } from './services/board-service';
 
 
 @NgModule({
@@ -23,7 +25,7 @@ import HeaderComponenet from './Components/Header/header';
     MatCheckboxModule,
     MatGridListModule
   ],
-  providers: [],
+  providers: [TileService],
   bootstrap: [ApplicationComponent]
 })
 export class AppModule { }
