@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {Tile, TileService} from '../../services/tile-service';
+import { MatDialog } from '@angular/material/dialog';
+import WinDialogComponent from '../WinDialog/win-dialog';
 
 @Component({
   selector: "app-board",
@@ -12,13 +14,16 @@ export default class BoardComponent {
   n: number = 3;
   movecount: number = 0;
   // declare board array to keep track of moves, initialize it with 'B' blank entries
-  boardState: String[][];
+  boardState: string[][];
+  winDialog: WinDialogComponent;
+  dialog: MatDialog;
 
   constructor(private tileService: TileService) {
     this.tiles = this.tileService.getTiles();
     this.player = true;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
-    this.movecount = 0
+    this.movecount = 0;
+    this.winDialog = new WinDialogComponent(this.dialog);
   }
 
   resetBoard() {
@@ -61,6 +66,7 @@ export default class BoardComponent {
       this.boardState[0][0] != "B"
     ) {
       console.log("Player: " + this.boardState[0][0] + " has won!");
+      this.winDialog.openDialog(this.boardState[0][0]);
     }
     // second row
     if (
