@@ -1,7 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import {Tile, TileService} from '../../services/tile-service';
-import { MatDialog } from '@angular/material/dialog';
-import WinDialogComponent from '../WinDialog/win-dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+// import WinDialogDialogComponent from '../WinDialog/win-dialog';
 
 @Component({
   selector: "app-board",
@@ -9,13 +9,12 @@ import WinDialogComponent from '../WinDialog/win-dialog';
   styleUrls: ["./board.css"]
 })
 export default class BoardComponent {
-  player: boolean;
+  public player: boolean;
   tiles: Array<Tile> = [];
   n: number = 3;
   movecount: number = 0;
   // declare board array to keep track of moves, initialize it with 'B' blank entries
   boardState: string[][];
-  winDialog: WinDialogComponent;
   dialog: MatDialog;
 
   constructor(private tileService: TileService) {
@@ -23,7 +22,16 @@ export default class BoardComponent {
     this.player = true;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
-    this.winDialog = new WinDialogComponent(this.dialog);
+  }
+
+    openDialog(player: string): void {
+    const dialogRef = this.dialog.open(WinDialogDialogComponent, {
+      width: '250px',
+      data: { player: player}
+    });
+    dialogRef.afterClosed().subscribe(results => {
+      console.log('The dialog was closed');
+    });
   }
 
   resetBoard() {
@@ -66,7 +74,7 @@ export default class BoardComponent {
       this.boardState[0][0] != "B"
     ) {
       console.log("Player: " + this.boardState[0][0] + " has won!");
-      this.winDialog.openDialog(this.boardState[0][0]);
+      this.openDialog(this.boardState[0][0]);
     }
     // second row
     if (
@@ -128,5 +136,20 @@ export default class BoardComponent {
     if (this.movecount == 8) {
       console.log("This game has resulted in a draw");
     }
+  }
+}
+
+@Component({
+  selector: "app-win-dialog-dialog",
+  templateUrl: "win-dialog-dialog.html"
+})
+export class WinDialogDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<WinDialogDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

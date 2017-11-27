@@ -1,3 +1,5 @@
 <div class="header">
   <h1>Tic-Tac-Tyler-Toe</h1>
+  <h3 *ngIf="player; else otherPlayer">Player 1</h3>
+  <ng-template #otherPlayer>Player 2</ng-template>
 </div>
