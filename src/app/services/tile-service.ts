@@ -15,7 +15,20 @@ export class TileService {
   getTiles(): Array<Tile> {
     return tiles.map(t => new Tile(t.text, t.cols, t.rows, t.color, t.imagePath, t.row, t.column));
   }
-}
+
+  getTile(row: number, column: number) {
+    let returnTile: Tile;
+    // console.log("You are getting tile.");
+    tiles.forEach(function(tile) {
+      // console.log(tile);
+      if (tile.row == row && tile.column == column) {
+        console.log("You found a match!");
+        returnTile = tile;
+      }
+      });
+      return returnTile;
+    }
+  }
 
 const tiles = [
   {
@@ -24,8 +37,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 1,
-    column: 1
+    row: 0,
+    column: 0
   },
   {
     text: "Two",
@@ -33,8 +46,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 1,
-    column: 2
+    row: 0,
+    column: 1
   },
   {
     text: "Three",
@@ -42,8 +55,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 1,
-    column: 3
+    row: 0,
+    column: 2
   },
   {
     text: "Four",
@@ -51,8 +64,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 2,
-    column: 1
+    row: 1,
+    column: 0
   },
   {
     text: "Five",
@@ -60,8 +73,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 2,
-    column: 2
+    row: 1,
+    column: 1
   },
   {
     text: "Six",
@@ -69,8 +82,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 2,
-    column: 3
+    row: 1,
+    column: 2
   },
   {
     text: "Seven",
@@ -78,8 +91,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 3,
-    column: 1
+    row: 2,
+    column: 0
   },
   {
     text: "Eight",
@@ -87,8 +100,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 3,
-    column: 2
+    row: 2,
+    column: 1
   },
   {
     text: "Nine",
@@ -96,8 +109,8 @@ const tiles = [
     rows: 1,
     color: "lightblue",
     imagePath: "",
-    row: 3,
-    column: 3
+    row: 2,
+    column: 2
   }
 ];
 

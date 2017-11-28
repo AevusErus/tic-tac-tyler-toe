@@ -59,6 +59,18 @@ export class BoardComponent {
     });
   }
 
+  setColor(row: number, column: number) {
+    this.tiles.forEach(function(tile) {
+      // console.log(tile);
+      if (tile.row == row && tile.column == column) {
+        console.log(tile);
+        tile.imagePath = "";
+        tile.imagePath = "../assets/x.png";
+        tile.color = 'green';
+      }
+    });
+  }
+
   placeSymbol(tile) {
     // check to see if the game is over.
     if (this.gameOver) {
@@ -68,9 +80,9 @@ export class BoardComponent {
     // player X's turn
     if (this.player) {
       //check if the tile is blank
-      if (this.boardState[tile.column - 1][tile.row - 1] == "B") {
+      if (this.boardState[tile.column][tile.row] == "B") {
         tile.imagePath = "../assets/x.png";
-        this.boardState[tile.column - 1][tile.row - 1] = "X";
+        this.boardState[tile.column][tile.row] = "X";
         this.movecount++;
         this.player = !this.player;
         this.playerTitle = 'Player Two (O)';
@@ -80,9 +92,9 @@ export class BoardComponent {
       // player Y's turn
     } else {
       //check if the tile is blank
-      if (this.boardState[tile.column - 1][tile.row - 1] == "B") {
+      if (this.boardState[tile.column][tile.row] == "B") {
         tile.imagePath = "../assets/0.png";
-        this.boardState[tile.column - 1][tile.row - 1] = "O";
+        this.boardState[tile.column][tile.row] = "O";
         this.movecount++;
         this.player = !this.player;
         this.playerTitle = 'Player One (X)';
@@ -98,6 +110,8 @@ export class BoardComponent {
       this.boardState[0][0] == this.boardState[2][0] &&
       this.boardState[0][0] != "B"
     ) {
+      this.setColor(0, 0);
+      console.log(this.tiles[0]);
       console.log("Player: " + this.boardState[0][0] + " has won!");
       this.openDialog(this.boardState[0][0]);
       this.gameOver = true;
@@ -173,7 +187,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // check draw condition
-    else if (this.movecount == 8) {
+    else if (this.movecount == 9) {
       console.log("This game has resulted in a draw");
       this.openDialog('Draw');
       this.gameOver = true;
