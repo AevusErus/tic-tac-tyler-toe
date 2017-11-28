@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +6,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./header.css']
 })
 
-export default class HeaderComponent {}
+export default class HeaderComponent {
+
+  @Input() player: string;
+
+  constructor() { }
+}

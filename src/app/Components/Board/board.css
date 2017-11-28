@@ -2,10 +2,6 @@
     position: absolute;
     left: 35%;
     top: 15%;
-    width: 600px;
-    height: 600px;
-}
-.x-square {
-  /* visibility: hidden; */
-  background-image: url("../../../assets/x.png");
+    width: 30%;
+    height: 25%;
 }

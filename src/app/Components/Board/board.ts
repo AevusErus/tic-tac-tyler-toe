@@ -10,6 +10,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialo
 })
 export class BoardComponent {
   player: boolean;
+  playerTitle: string
   gameOver: boolean;
   tiles: Array<Tile> = [];
   n: number = 3;
@@ -21,6 +22,7 @@ export class BoardComponent {
   constructor(public dialog: MatDialog, private tileService: TileService) {
     this.tiles = this.tileService.getTiles();
     this.player = true;
+    this.playerTitle = 'Player One (X)';
     this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
@@ -28,6 +30,7 @@ export class BoardComponent {
   resetBoard() {
     this.tiles = this.tileService.getTiles();
     this.player = true;
+    this.playerTitle = 'Player One (X)';
     this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
@@ -37,7 +40,7 @@ export class BoardComponent {
     console.log(player);
     if (player === 'Draw') {
       playerMessage = 'The game is a draw!';
-    } else if (player === 'X'){
+    } else if (player === 'X') {
       playerMessage = 'Player One has won the game!';
     } else if (player === 'O') {
       playerMessage = 'Player Two has won the game!';
@@ -70,6 +73,7 @@ export class BoardComponent {
         this.boardState[tile.column - 1][tile.row - 1] = "X";
         this.movecount++;
         this.player = !this.player;
+        this.playerTitle = 'Player Two (O)';
       } else {
         console.log("Must pick a blank space! It is still X's turn.");
       }
@@ -81,6 +85,7 @@ export class BoardComponent {
         this.boardState[tile.column - 1][tile.row - 1] = "O";
         this.movecount++;
         this.player = !this.player;
+        this.playerTitle = 'Player One (X)';
       } else {
         console.log("Must pick a blank space! It is still O's turn.");
       }
@@ -98,7 +103,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // second row
-    if (
+    else if (
       this.boardState[0][1] == this.boardState[1][1] &&
       this.boardState[0][1] == this.boardState[2][1] &&
       this.boardState[0][1] != "B"
@@ -108,7 +113,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // third row
-    if (
+    else if (
       this.boardState[0][2] == this.boardState[1][2] &&
       this.boardState[0][2] == this.boardState[2][2] &&
       this.boardState[0][2] != "B"
@@ -118,7 +123,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // first column
-    if (
+    else if (
       this.boardState[0][0] == this.boardState[0][1] &&
       this.boardState[0][0] == this.boardState[0][2] &&
       this.boardState[0][0] != "B"
@@ -128,7 +133,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // second column
-    if (
+    else if (
       this.boardState[1][0] == this.boardState[1][1] &&
       this.boardState[1][0] == this.boardState[1][2] &&
       this.boardState[1][0] != "B"
@@ -138,7 +143,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // third column
-    if (
+    else if (
       this.boardState[2][0] == this.boardState[2][1] &&
       this.boardState[2][0] == this.boardState[2][2] &&
       this.boardState[2][0] != "B"
@@ -148,7 +153,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // diag bottom-right
-    if (
+    else if (
       this.boardState[0][0] == this.boardState[1][1] &&
       this.boardState[0][0] == this.boardState[2][2] &&
       this.boardState[0][0] != "B"
@@ -158,7 +163,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // diag top-right
-    if (
+    else if (
       this.boardState[0][2] == this.boardState[1][1] &&
       this.boardState[0][2] == this.boardState[2][0] &&
       this.boardState[0][2] != "B"
@@ -168,7 +173,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
     // check draw condition
-    if (this.movecount == 8) {
+    else if (this.movecount == 8) {
       console.log("This game has resulted in a draw");
       this.openDialog('Draw');
       this.gameOver = true;
