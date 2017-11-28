@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Hi {{data.player}}</h1>
+<h1 mat-dialog-title>Game Over</h1>
 <div mat-dialog-content>
-  <p>This is a test!</p>
+  <p>{{data.playerMessage}}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button tabindex="2">Ok</button>
+  <button mat-button [mat-dialog-close]="!data.reset" tabindex="1">Play Again?</button>
   <button mat-button (click)="onNoClick()" tabindex="-1">No Thanks</button>
 </div>

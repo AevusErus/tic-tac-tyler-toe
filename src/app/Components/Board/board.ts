@@ -8,40 +8,60 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialo
   templateUrl: "./board.html",
   styleUrls: ["./board.css"]
 })
-export default class BoardComponent {
-  public player: boolean;
+export class BoardComponent {
+  player: boolean;
+  gameOver: boolean;
   tiles: Array<Tile> = [];
   n: number = 3;
   movecount: number = 0;
   // declare board array to keep track of moves, initialize it with 'B' blank entries
   boardState: string[][];
-  dialog: MatDialog;
+  // dialog: MatDialog;
 
-  constructor(private tileService: TileService) {
+  constructor(public dialog: MatDialog, private tileService: TileService) {
     this.tiles = this.tileService.getTiles();
     this.player = true;
+    this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
   }
-
-    openDialog(player: string): void {
-    const dialogRef = this.dialog.open(WinDialogDialogComponent, {
-      width: '250px',
-      data: { player: player}
-    });
-    dialogRef.afterClosed().subscribe(results => {
-      console.log('The dialog was closed');
-    });
-  }
-
   resetBoard() {
     this.tiles = this.tileService.getTiles();
     this.player = true;
+    this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
   }
+  openDialog(player: string): void {
+    let playerMessage: string;
+    console.log(player);
+    if (player === 'Draw') {
+      playerMessage = 'The game is a draw!';
+    } else if (player === 'X'){
+      playerMessage = 'Player One has won the game!';
+    } else if (player === 'O') {
+      playerMessage = 'Player Two has won the game!';
+    } else {
+      playerMessage = 'Something horrible has happened! What have you done to me?!';
+    }
+    const dialogRef = this.dialog.open(WinDialogDialogComponent, {
+      width: "300px",
+      data: { playerMessage: playerMessage , reset: false }
+    });
+    dialogRef.afterClosed().subscribe(results => {
+      console.log("The dialog was closed");
+      if (results) {
+        this.resetBoard();
+      }
+    });
+  }
 
   placeSymbol(tile) {
+    // check to see if the game is over.
+    if (this.gameOver) {
+      console.log("Game is Over");
+      return;
+    }
     // player X's turn
     if (this.player) {
       //check if the tile is blank
@@ -75,6 +95,7 @@ export default class BoardComponent {
     ) {
       console.log("Player: " + this.boardState[0][0] + " has won!");
       this.openDialog(this.boardState[0][0]);
+      this.gameOver = true;
     }
     // second row
     if (
@@ -83,6 +104,8 @@ export default class BoardComponent {
       this.boardState[0][1] != "B"
     ) {
       console.log("Player: " + this.boardState[0][1] + " has won!");
+      this.openDialog(this.boardState[0][1]);
+      this.gameOver = true;
     }
     // third row
     if (
@@ -91,6 +114,8 @@ export default class BoardComponent {
       this.boardState[0][2] != "B"
     ) {
       console.log("Player: " + this.boardState[0][2] + " has won!");
+      this.openDialog(this.boardState[0][2]);
+      this.gameOver = true;
     }
     // first column
     if (
@@ -99,6 +124,8 @@ export default class BoardComponent {
       this.boardState[0][0] != "B"
     ) {
       console.log("Player: " + this.boardState[0][0] + " has won!");
+      this.openDialog(this.boardState[0][0]);
+      this.gameOver = true;
     }
     // second column
     if (
@@ -107,6 +134,8 @@ export default class BoardComponent {
       this.boardState[1][0] != "B"
     ) {
       console.log("Player: " + this.boardState[1][0] + " has won!");
+      this.openDialog(this.boardState[1][0]);
+      this.gameOver = true;
     }
     // third column
     if (
@@ -115,6 +144,8 @@ export default class BoardComponent {
       this.boardState[2][0] != "B"
     ) {
       console.log("Player: " + this.boardState[2][0] + " has won!");
+      this.openDialog(this.boardState[2][0]);
+      this.gameOver = true;
     }
     // diag bottom-right
     if (
@@ -123,6 +154,8 @@ export default class BoardComponent {
       this.boardState[0][0] != "B"
     ) {
       console.log("Player: " + this.boardState[0][0] + " has won!");
+      this.openDialog(this.boardState[0][0]);
+      this.gameOver = true;
     }
     // diag top-right
     if (
@@ -131,17 +164,21 @@ export default class BoardComponent {
       this.boardState[0][2] != "B"
     ) {
       console.log("Player: " + this.boardState[0][2] + " has won!");
+      this.openDialog(this.boardState[0][2]);
+      this.gameOver = true;
     }
     // check draw condition
     if (this.movecount == 8) {
       console.log("This game has resulted in a draw");
+      this.openDialog('Draw');
+      this.gameOver = true;
     }
   }
 }
 
 @Component({
-  selector: "app-win-dialog-dialog",
-  templateUrl: "win-dialog-dialog.html"
+  selector: 'app-win-dialog-dialog',
+  templateUrl: 'win-dialog-dialog.html'
 })
 export class WinDialogDialogComponent {
   constructor(
