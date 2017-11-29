@@ -2,10 +2,9 @@
 <div class="playfield">
   <mat-grid-list cols="3">
     <!--Row 1-->
-    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"  [style.background-image]="'url(' + tile.imagePath+ ')'"  [style.background]="tile.color" 
-    
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"  [style.background]="tile.color" 
       (click)="placeSymbol(tile)">
-      <!-- <img [src]="xImage"/> -->
+      <img [src]="tile.imagePath">
     </mat-grid-tile>
   </mat-grid-list>
 <button class="playfield-button" mat-raised-button color="primary" (click)="resetBoard()">Reset</button>  

@@ -1,0 +1,20 @@
+html {
+    min-height: 100%;
+}
+body {
+    background-repeat: no-repeat;
+    background: #f8f8f8;
+
+    background: -webkit-linear-gradient(#e7e7e7, #f8f8f8);
+
+    /* For Safari 5.1 to 6.0 */
+
+    background: -o-linear-gradient(#e7e7e7, #f8f8f8);
+    /* For Opera 11.1 to 12.0 */
+
+    background: -moz-linear-gradient(#e7e7e7, #f8f8f8);
+    /* For Firefox 3.6 to 15 */
+
+    background: linear-gradient(#e7e7e7, #f8f8f8);
+    /* Standard syntax */
+  }

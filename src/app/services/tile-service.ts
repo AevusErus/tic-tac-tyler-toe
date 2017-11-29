@@ -35,7 +35,7 @@ const tiles = [
     text: "One",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 0,
     column: 0
@@ -44,7 +44,7 @@ const tiles = [
     text: "Two",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 0,
     column: 1
@@ -53,7 +53,7 @@ const tiles = [
     text: "Three",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 0,
     column: 2
@@ -62,7 +62,7 @@ const tiles = [
     text: "Four",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 1,
     column: 0
@@ -71,7 +71,7 @@ const tiles = [
     text: "Five",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 1,
     column: 1
@@ -80,7 +80,7 @@ const tiles = [
     text: "Six",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 1,
     column: 2
@@ -89,7 +89,7 @@ const tiles = [
     text: "Seven",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 2,
     column: 0
@@ -98,7 +98,7 @@ const tiles = [
     text: "Eight",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 2,
     column: 1
@@ -107,7 +107,7 @@ const tiles = [
     text: "Nine",
     cols: 1,
     rows: 1,
-    color: "lightblue",
+    color: "#3c4a84",
     imagePath: "",
     row: 2,
     column: 2

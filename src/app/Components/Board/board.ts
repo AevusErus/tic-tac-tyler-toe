@@ -133,13 +133,11 @@ export class BoardComponent {
   setColor(column, row, player) {
     this.tiles.forEach(function(tile) {
       if (tile.row == row && tile.column == column) {
-        console.log(tile.imagePath)
-        console.log(tile.color)
-        // tile.imagePath = "../assets/tyler.png";
-        // tile.imagePath = "../assets/" + player + ".png";
-        tile.color = 'green';
-        console.log(tile.imagePath)
-        console.log(tile.color)
+        console.log(tile.imagePath);
+        console.log(tile.color);
+        tile.color = '#859247';
+        console.log(tile.imagePath);
+        console.log(tile.color);
       }
     });
   }

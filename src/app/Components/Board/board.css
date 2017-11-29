@@ -11,3 +11,8 @@
     margin-top: 5px;
     float: right;
 }
+
+.playfield img {
+    max-width: 100%;
+    height: auto;
+}
