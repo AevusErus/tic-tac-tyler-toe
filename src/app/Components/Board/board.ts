@@ -9,28 +9,27 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialo
   styleUrls: ["./board.css"]
 })
 export class BoardComponent {
-  player: boolean;
+  player: string;
   playerTitle: string
   gameOver: boolean;
   tiles: Array<Tile> = [];
   n: number = 3;
   movecount: number = 0;
-  // declare board array to keep track of moves, initialize it with 'B' blank entries
   boardState: string[][];
   // dialog: MatDialog;
 
   constructor(public dialog: MatDialog, private tileService: TileService) {
     this.tiles = this.tileService.getTiles();
-    this.player = true;
-    this.playerTitle = 'Player One (X)';
+    this.player = "X";
+    this.playerTitle = 'Player X';
     this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
   }
   resetBoard() {
     this.tiles = this.tileService.getTiles();
-    this.player = true;
-    this.playerTitle = 'Player One (X)';
+    this.player = "X";
+    this.playerTitle = 'Player X';
     this.gameOver = false;
     this.boardState = [["B", "B", "B"], ["B", "B", "B"], ["B", "B", "B"]];
     this.movecount = 0;
@@ -41,9 +40,9 @@ export class BoardComponent {
     if (player === 'Draw') {
       playerMessage = 'The game is a draw!';
     } else if (player === 'X') {
-      playerMessage = 'Player One has won the game!';
+      playerMessage = 'Player ' + player +' has won the game!';
     } else if (player === 'O') {
-      playerMessage = 'Player Two has won the game!';
+      playerMessage = 'Player ' + player + ' has won the game!';
     } else {
       playerMessage = 'Something horrible has happened! What have you done to me?!';
     }
@@ -59,139 +58,91 @@ export class BoardComponent {
     });
   }
 
-  setColor(row: number, column: number) {
+  setColor( column: number, row: number, player: string) {
     this.tiles.forEach(function(tile) {
-      // console.log(tile);
       if (tile.row == row && tile.column == column) {
         console.log(tile);
-        tile.imagePath = "";
-        tile.imagePath = "../assets/x.png";
         tile.color = 'green';
+        tile.imagePath = "";
       }
     });
   }
 
   placeSymbol(tile) {
-    // check to see if the game is over.
     if (this.gameOver) {
       console.log("Game is Over");
       return;
     }
-    // player X's turn
-    if (this.player) {
-      //check if the tile is blank
-      if (this.boardState[tile.column][tile.row] == "B") {
-        tile.imagePath = "../assets/x.png";
-        this.boardState[tile.column][tile.row] = "X";
-        this.movecount++;
-        this.player = !this.player;
-        this.playerTitle = 'Player Two (O)';
-      } else {
-        console.log("Must pick a blank space! It is still X's turn.");
-      }
-      // player Y's turn
+    if (this.boardState[tile.column][tile.row] == "B") {
+      this.boardState[tile.column][tile.row] = this.player;
+      tile.imagePath = "../assets/" + this.player + ".png";
+      this.movecount++;
+      this.checkwin(tile.column, tile.row);
+        if (this.player == "X") {
+          this.player = "O";
+        }else {
+          this.player = "X";}
+      this.playerTitle = 'Player ' + this.player;
     } else {
-      //check if the tile is blank
-      if (this.boardState[tile.column][tile.row] == "B") {
-        tile.imagePath = "../assets/0.png";
-        this.boardState[tile.column][tile.row] = "O";
-        this.movecount++;
-        this.player = !this.player;
-        this.playerTitle = 'Player One (X)';
-      } else {
-        console.log("Must pick a blank space! It is still O's turn.");
-      }
+        console.log("Must pick a blank space! It is still " + this.player + "'s turn.");
     }
+  }
 
-    // manually check win condition, refactor this later!
-    // first row
+  checkwin( column: number, row:number ) {
     if (
-      this.boardState[0][0] == this.boardState[1][0] &&
-      this.boardState[0][0] == this.boardState[2][0] &&
-      this.boardState[0][0] != "B"
+      this.checkColumn(column)  ||
+      this.checkRow(row)        ||
+      this.checkDiagBot()     ||
+      this.checkDiagTop()
     ) {
-      this.setColor(0, 0);
-      console.log(this.tiles[0]);
-      console.log("Player: " + this.boardState[0][0] + " has won!");
-      this.openDialog(this.boardState[0][0]);
-      this.gameOver = true;
-    }
-    // second row
-    else if (
-      this.boardState[0][1] == this.boardState[1][1] &&
-      this.boardState[0][1] == this.boardState[2][1] &&
-      this.boardState[0][1] != "B"
-    ) {
-      console.log("Player: " + this.boardState[0][1] + " has won!");
-      this.openDialog(this.boardState[0][1]);
-      this.gameOver = true;
-    }
-    // third row
-    else if (
-      this.boardState[0][2] == this.boardState[1][2] &&
-      this.boardState[0][2] == this.boardState[2][2] &&
-      this.boardState[0][2] != "B"
-    ) {
-      console.log("Player: " + this.boardState[0][2] + " has won!");
-      this.openDialog(this.boardState[0][2]);
-      this.gameOver = true;
-    }
-    // first column
-    else if (
-      this.boardState[0][0] == this.boardState[0][1] &&
-      this.boardState[0][0] == this.boardState[0][2] &&
-      this.boardState[0][0] != "B"
-    ) {
-      console.log("Player: " + this.boardState[0][0] + " has won!");
-      this.openDialog(this.boardState[0][0]);
-      this.gameOver = true;
-    }
-    // second column
-    else if (
-      this.boardState[1][0] == this.boardState[1][1] &&
-      this.boardState[1][0] == this.boardState[1][2] &&
-      this.boardState[1][0] != "B"
-    ) {
-      console.log("Player: " + this.boardState[1][0] + " has won!");
-      this.openDialog(this.boardState[1][0]);
-      this.gameOver = true;
-    }
-    // third column
-    else if (
-      this.boardState[2][0] == this.boardState[2][1] &&
-      this.boardState[2][0] == this.boardState[2][2] &&
-      this.boardState[2][0] != "B"
-    ) {
-      console.log("Player: " + this.boardState[2][0] + " has won!");
-      this.openDialog(this.boardState[2][0]);
-      this.gameOver = true;
-    }
-    // diag bottom-right
-    else if (
-      this.boardState[0][0] == this.boardState[1][1] &&
-      this.boardState[0][0] == this.boardState[2][2] &&
-      this.boardState[0][0] != "B"
-    ) {
-      console.log("Player: " + this.boardState[0][0] + " has won!");
-      this.openDialog(this.boardState[0][0]);
-      this.gameOver = true;
-    }
-    // diag top-right
-    else if (
-      this.boardState[0][2] == this.boardState[1][1] &&
-      this.boardState[0][2] == this.boardState[2][0] &&
-      this.boardState[0][2] != "B"
-    ) {
-      console.log("Player: " + this.boardState[0][2] + " has won!");
-      this.openDialog(this.boardState[0][2]);
+      this.openDialog(this.player);
       this.gameOver = true;
     }
     // check draw condition
     else if (this.movecount == 9) {
-      console.log("This game has resulted in a draw");
       this.openDialog('Draw');
       this.gameOver = true;
     }
+  }
+  checkRow( row:number ) {
+    if (this.boardState[0][row] == this.boardState[1][row] &&
+        this.boardState[0][row] == this.boardState[2][row] &&
+        this.boardState[0][row] != "B") {
+    this.setColor(0, row, this.player);
+    this.setColor(1, row, this.player);
+    this.setColor(2, row, this.player);
+    return true
+    } else {}
+  }
+  checkColumn( column:number ) {
+    if (this.boardState[column][0] == this.boardState[column][1] &&
+        this.boardState[column][0] == this.boardState[column][2] &&
+        this.boardState[column][0] != "B") {
+    this.setColor(column, 0, this.player);
+    this.setColor(column, 1, this.player);
+    this.setColor(column, 2, this.player);
+    return true
+    } else {}
+  }
+  checkDiagBot() {
+    if (this.boardState[0][0] == this.boardState[1][1] &&
+      this.boardState[0][0] == this.boardState[2][2] &&
+      this.boardState[0][0] != "B") {
+    this.setColor(0, 0, this.player);
+    this.setColor(1, 1, this.player);
+    this.setColor(2, 2, this.player);
+    return true
+    } else {}
+  }
+  checkDiagTop() {
+    if (this.boardState[0][2] == this.boardState[1][1] &&
+      this.boardState[0][2] == this.boardState[2][0] &&
+      this.boardState[0][2] != "B") {
+    this.setColor(0, 2, this.player);
+    this.setColor(1, 1, this.player);
+    this.setColor(2, 0, this.player);
+    return true
+    } else {}
   }
 }
 
