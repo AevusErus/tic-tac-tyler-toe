@@ -51,23 +51,12 @@ export class BoardComponent {
       data: { playerMessage: playerMessage , reset: false }
     });
     dialogRef.afterClosed().subscribe(results => {
-      console.log("The dialog was closed");
-      if (results) {
-        this.resetBoard();
+    console.log("The dialog was closed");
+    if (results) {
+      this.resetBoard();
       }
     });
   }
-
-  setColor( column: number, row: number, player: string) {
-    this.tiles.forEach(function(tile) {
-      if (tile.row == row && tile.column == column) {
-        console.log(tile);
-        tile.color = 'green';
-        tile.imagePath = "";
-      }
-    });
-  }
-
   placeSymbol(tile) {
     if (this.gameOver) {
       console.log("Game is Over");
@@ -87,12 +76,10 @@ export class BoardComponent {
         console.log("Must pick a blank space! It is still " + this.player + "'s turn.");
     }
   }
-
   checkwin( column: number, row:number ) {
     if (
-      this.checkColumn(column)  ||
-      this.checkRow(row)        ||
-      this.checkDiagBot()     ||
+      this.checkColumnRow(column, row) ||
+      this.checkDiagBot() ||
       this.checkDiagTop()
     ) {
       this.openDialog(this.player);
@@ -104,7 +91,7 @@ export class BoardComponent {
       this.gameOver = true;
     }
   }
-  checkRow( row:number ) {
+  checkColumnRow( column, row:number ) {
     if (this.boardState[0][row] == this.boardState[1][row] &&
         this.boardState[0][row] == this.boardState[2][row] &&
         this.boardState[0][row] != "B") {
@@ -112,9 +99,7 @@ export class BoardComponent {
     this.setColor(1, row, this.player);
     this.setColor(2, row, this.player);
     return true
-    } else {}
-  }
-  checkColumn( column:number ) {
+    } else 
     if (this.boardState[column][0] == this.boardState[column][1] &&
         this.boardState[column][0] == this.boardState[column][2] &&
         this.boardState[column][0] != "B") {
@@ -122,7 +107,8 @@ export class BoardComponent {
     this.setColor(column, 1, this.player);
     this.setColor(column, 2, this.player);
     return true
-    } else {}
+    
+      }else {}
   }
   checkDiagBot() {
     if (this.boardState[0][0] == this.boardState[1][1] &&
@@ -143,6 +129,19 @@ export class BoardComponent {
     this.setColor(2, 0, this.player);
     return true
     } else {}
+  }
+  setColor(column, row, player) {
+    this.tiles.forEach(function(tile) {
+      if (tile.row == row && tile.column == column) {
+        console.log(tile.imagePath)
+        console.log(tile.color)
+        // tile.imagePath = "../assets/tyler.png";
+        // tile.imagePath = "../assets/" + player + ".png";
+        tile.color = 'green';
+        console.log(tile.imagePath)
+        console.log(tile.color)
+      }
+    });
   }
 }
 
