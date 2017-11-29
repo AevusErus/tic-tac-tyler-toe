@@ -1,7 +1,13 @@
 .playfield {
     position: absolute;
     left: 35%;
-    top: 15%;
+    top: 125px;
     width: 30%;
     height: 25%;
+    float: left;
+}
+
+.playfield-button {
+    margin-top: 5px;
+    float: right;
 }
